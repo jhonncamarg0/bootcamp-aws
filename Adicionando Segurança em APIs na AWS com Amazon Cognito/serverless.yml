@@ -1,0 +1,42 @@
+service: api-security-dio
+frameworkVersion: '3'
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: sa-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+          Resource:
+            - arn:aws:dynamodb:sa-east-1:088457286732:table/api-security-dio-table
+functions:
+  api:
+    handler: src/index.handler
+    events:
+      - http:
+          path: /
+          method: get
+          integration: aws_proxy
+  createItem:
+    handler: src/createItem.handler
+    events:
+      - http:
+          path: /item
+          method: post
+          integration: aws_proxy
+resources:
+  Resources:
+    ItemTableNew:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: api-security-dio-table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
