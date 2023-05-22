@@ -22,30 +22,35 @@ functions:
       - http:
           path: /
           method: get
+          integration: aws_proxy
   createItem:
     handler: src/createItem.handler
     events:
       - http:
           path: /item
           method: post
+          integration: aws_proxy
   readItems:
     handler: src/readItems.handler
     events:
       - http:
           path: /items
           method: get
+          integration: aws_proxy
   readItem:
     handler: src/readItem.handler
     events:
       - http:
           path: /items/{id}
           method: get
+          integration: aws_proxy
   updateItem:
     handler: src/updateItem.handler
     events:
       - http:
           path: /items/{id}
           method: put
+          integration: aws_proxy
 resources:
   Resources:
     ItemTableNew:
