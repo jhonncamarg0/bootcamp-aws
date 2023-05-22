@@ -1,6 +1,5 @@
 service: serverless-dio
 frameworkVersion: '3'
-
 provider:
   name: aws
   runtime: nodejs18.x
@@ -16,7 +15,6 @@ provider:
             - dynamodb:scan
           Resource:
             - arn:aws:dynamodb:sa-east-1:088457286732:table/serverless-dio-table
-
 functions:
   api:
     handler: src/index.handler

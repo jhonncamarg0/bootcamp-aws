@@ -1,19 +1,19 @@
-"use strict";
-const {uuid} = require("uuid");
-const aws = require("aws-sdk");
+'use strict';
+const {uuid} = require('uuid');
+const aws = require('aws-sdk');
 const createItem = async (event) => {
     const {item} = JSON.parse(event.body);
-    const attribute = new Date().toISOString();
+    const attributeDate = new Date().toISOString();
     const id = uuid();
     const dynamodb = new aws.DynamoDB.DocumentClient();
     const newItem = {
         id,
         item,
-        attribute,
+        attributeDate,
         itemStatus: false
     }
     await dynamodb.put({
-        TableName: "serverless-dio-table",
+        TableName: 'serverless-dio-table',
         Item: newItem
     }).promise();
     return {
